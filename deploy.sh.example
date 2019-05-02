@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+# dos2unix deploy.sh
+
+set -e
+
+# 配置
+git config --local user.name "your name"
+git config --local user.email "your email"
+git config --global push.default simple
+git config --global credential.helper store
+
+# 拉取代码
+# git pull
+
+# 提交代码
+git add -A
+
+# 触发 commitizen/cz-cli
+yarn commit
+
+# 推送
+git push -u origin master
+
+# 部署
+dep deploy
