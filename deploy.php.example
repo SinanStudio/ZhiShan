@@ -6,12 +6,15 @@ require 'recipe/laravel.php';
 
 
 $custom = [
-    'repository'  => 'your git repository url',
-    'deploy_path' => 'your deploy path',
+    'application' => 'project name',// 项目名称
+    'repository'  => 'your git repository url',// 部署项目仓库地址
+    'host'        => 'Ip or domain',
+    'deploy_path' => 'your deploy path',// 部署项目路径
+    'branch'      => 'master',// 选择部署的分支
 ];
 
 // Project name
-set('application', 'ZhiShan');
+set('application', $custom['application']);
 
 set('default_stage', 'production');
 
@@ -42,11 +45,11 @@ set('writable_use_sudo', false);
 set('cleanup_use_sudo', true);
 
 // Hosts
-host('39.107.92.208')// 这里填写目标服务器的 IP 或者域名
+host($custom['host'])// 这里填写目标服务器的 IP 或者域名
 ->stage('production')
     ->user('deployer')// 这里填写 deployer
     ->port(22)
-    ->set('branch', 'master')// 最新的 master 分支部署到生产机
+    ->set('branch', $custom['branch'])// 最新的 master 分支部署到生产机
     ->identityFile('~/.ssh/deployerkey')// 并指定公钥的位置
     ->set('deploy_path', $custom['deploy_path']); // 指定项目部署到服务器上的哪个目录
 //    ->forwardAgent(true)
